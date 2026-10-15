@@ -4,12 +4,12 @@ $ cd public/assets && find . \( -name "*.js" -o -name "*.map" \) -type f -delete
 Browserslist: caniuse-lite is outdated. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
-(node:8336) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+(node:18680) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-Hash: 5cb1e6add1293e2b288e
+Hash: 1c901cdc3923b02840a6
 Version: webpack 4.43.0
-Time: 53895ms
-Built at: 14/10/2026 20.27.01
+Time: 64451ms
+Built at: 15/10/2026 21.32.44
                                     Asset      Size  Chunks                                Chunk Names
                            10.6bd1701a.js  2.97 KiB      10  [emitted] [immutable]         
                            11.b2eda9f6.js  3.96 KiB      11  [emitted] [immutable]         
@@ -20,14 +20,14 @@ Built at: 14/10/2026 20.27.01
                             8.64a7dc4e.js  3.21 KiB       8  [emitted] [immutable]         
                             9.b6f811a8.js  11.7 KiB       9  [emitted] [immutable]         
                          auth.575db982.js  27.2 KiB       3  [emitted] [immutable]         auth
-                       bundle.2837f4f6.js   558 KiB       5  [emitted] [immutable]  [big]  main
+                       bundle.1b7ea65d.js   558 KiB       5  [emitted] [immutable]  [big]  main
                     dashboard.f4883682.js  15.7 KiB       4  [emitted] [immutable]         dashboard
              dashboard~server.f28817a1.js   263 KiB       1  [emitted] [immutable]  [big]  dashboard~server
                             manifest.json  1.15 KiB          [emitted]                     
                        server.6b268536.js    51 KiB       6  [emitted] [immutable]         server
 vendors~auth~dashboard~server.122b2b76.js    90 KiB       0  [emitted] [immutable]         vendors~auth~dashboard~server
      vendors~dashboard~server.5e5697e4.js  1.09 MiB       2  [emitted] [immutable]  [big]  vendors~dashboard~server
-Entrypoint main [big] = bundle.2837f4f6.js
+Entrypoint main [big] = bundle.1b7ea65d.js
  [11] ./node_modules/history/esm/history.js + 2 modules 30.6 KiB {5} [built]
       |    3 modules
  [15] ./node_modules/react-router/esm/react-router.js + 1 modules 29.2 KiB {5} [built]
@@ -82,4 +82,4 @@ Entrypoint main [big] = bundle.2837f4f6.js
       | ./resources/scripts/api/server/getServerResourceUsage.ts 767 bytes [built]
       |     + 6 hidden modules
     + 397 hidden modules
-Done in 57.61s.
+Done in 83.18s.

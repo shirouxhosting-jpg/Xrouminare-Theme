@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>{{ config('app.name', 'Pterodactyl') }} - @yield('title')</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="_token" content="{{ csrf_token() }}">
+
+        {{-- XROUMINARE: resolve the saved theme before first paint so there is no flash --}}
+        <script>
+            (function () {
+                try {
+                    var mode = localStorage.getItem('xrou-theme') || 'system';
+                    var dark =
+                        mode === 'dark' ||
+                        (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    document.documentElement.classList.add(dark ? 'xrou-dark' : 'xrou-light');
+                } catch (e) {
+                    document.documentElement.classList.add('xrou-dark');
+                }
+            })();
+        </script>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
         <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
@@ -14,7 +29,7 @@
         <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#bc6e3c">
         <link rel="shortcut icon" href="/favicons/favicon.ico">
         <meta name="msapplication-config" content="/favicons/browserconfig.xml">
-        <meta name="theme-color" content="#0e4688">
+        <meta name="theme-color" content="#111318">
 
         @include('layouts.scripts')
 
@@ -26,6 +41,8 @@
             {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
             {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
             {!! Theme::css('css/pterodactyl.css?t={cache-version}') !!}
+            {{-- XROUMINARE theme overrides — must stay after pterodactyl.css --}}
+            {!! Theme::css('css/xrou-admin.css?t={cache-version}') !!}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -39,7 +56,19 @@
         <div class="wrapper">
             <header class="main-header">
                 <a href="{{ route('index') }}" class="logo">
-                    <span>{{ config('app.name', 'Pterodactyl') }}</span>
+                    <span style="display:inline-flex;align-items:center;gap:8px;">
+                        <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="xrou-admin-logo-x" x1="14" y1="14" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#62C4D4"/><stop offset="1" stop-color="#8175F5"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="5.5" y="5.5" width="40" height="40" rx="11" fill="var(--xrou-shadow)"/>
+                            <rect x="2.5" y="2.5" width="40" height="40" rx="11" fill="var(--xrou-elevated)" stroke="var(--xrou-border-strong)" stroke-width="2.5"/>
+                            <path d="M13 13.5L32 31.5M32 13.5L13 31.5" stroke="url(#xrou-admin-logo-x)" stroke-width="6.5" stroke-linecap="round"/>
+                        </svg>
+                        <span>{{ config('app.name', 'Pterodactyl') }}</span>
+                    </span>
                 </a>
                 <nav class="navbar navbar-static-top">
                     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -50,6 +79,11 @@
                     </a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
+                            <li class="xrou-admin-theme-toggle" id="xrouAdminThemeToggle" title="Ganti tema terang/gelap">
+                                <a href="#" onclick="return false;">
+                                    <i class="fa fa-moon-o"></i>
+                                </a>
+                            </li>
                             <li class="user-menu">
                                 <a href="{{ route('account') }}">
                                     <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(Auth::user()->email)) }}?s=160" class="user-image" alt="User Image">
@@ -208,6 +242,44 @@
                 $(function () {
                     $('[data-toggle="tooltip"]').tooltip();
                 })
+            </script>
+
+            {{-- XROUMINARE: admin theme toggle (shares the `xrou-theme` storage key with the user-facing app) --}}
+            <script>
+                (function () {
+                    function resolveIsDark() {
+                        try {
+                            var mode = localStorage.getItem('xrou-theme') || 'system';
+                            return mode === 'dark' ||
+                                (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                        } catch (e) {
+                            return true;
+                        }
+                    }
+
+                    function syncIcon() {
+                        var icon = document.querySelector('#xrouAdminThemeToggle i');
+                        if (icon) {
+                            icon.className = resolveIsDark() ? 'fa fa-moon-o' : 'fa fa-sun-o';
+                        }
+                    }
+
+                    var toggle = document.getElementById('xrouAdminThemeToggle');
+                    if (toggle) {
+                        toggle.addEventListener('click', function () {
+                            var next = resolveIsDark() ? 'light' : 'dark';
+                            try {
+                                localStorage.setItem('xrou-theme', next);
+                            } catch (e) { /* ignore */ }
+                            var root = document.documentElement;
+                            root.classList.toggle('xrou-light', next === 'light');
+                            root.classList.toggle('xrou-dark', next === 'dark');
+                            syncIcon();
+                        });
+                    }
+
+                    syncIcon();
+                })();
             </script>
         @show
     </body>

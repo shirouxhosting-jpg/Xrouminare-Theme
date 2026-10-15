@@ -1,0 +1,47 @@
+/* XROUMINARE dialog (headless UI confirm): card treatment + themed icons. */
+.container {
+    @apply flex min-h-full items-center justify-center p-4 text-center;
+}
+
+.panel {
+    @apply relative rounded-lg max-w-xl w-full mx-auto text-left;
+    background-color: var(--xrou-elevated);
+    border: 2px solid var(--xrou-border-strong);
+    border-radius: 10px;
+    box-shadow: var(--xrou-shadow-offset) var(--xrou-shadow-offset) 0 var(--xrou-shadow);
+}
+
+.title {
+    @apply font-header text-xl font-bold mb-2 pr-4;
+    color: var(--xrou-text);
+}
+
+.close_icon {
+    @apply w-5 h-5 group-hover:rotate-90 transition-transform duration-100;
+    color: var(--xrou-text-3);
+}
+
+.dialog_icon {
+    @apply flex items-center justify-center w-10 h-10 rounded-full mr-4;
+    border: 2px solid var(--xrou-border-strong);
+
+    &.danger {
+        background-color: var(--xrou-pink);
+        color: var(--xrou-pink-text);
+    }
+
+    &.warning {
+        background-color: var(--xrou-yellow);
+        color: var(--xrou-yellow-text);
+    }
+
+    &.success {
+        background-color: var(--xrou-green);
+        color: var(--xrou-green-text);
+    }
+
+    &.info {
+        background-color: var(--xrou-cyan);
+        color: var(--xrou-cyan-text);
+    }
+}

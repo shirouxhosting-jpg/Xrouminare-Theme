@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id" class="xrou-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XROUMINARE — Preview Admin Control</title>
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/select2/select2.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/adminlte/admin.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/adminlte/colors/skin-blue.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/sweetalert/sweetalert.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/css/pterodactyl.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/css/xrou-admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    /* tiny preview helpers (not part of the theme) */
+    .preview-note { position: fixed; right: 14px; bottom: 14px; z-index: 9999; }
+</style>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span style="display:inline-flex;align-items:center;gap:8px;">
+                <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="xg" x1="14" y1="14" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#62C4D4"/><stop offset="1" stop-color="#8175F5"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="5.5" y="5.5" width="40" height="40" rx="11" fill="var(--xrou-shadow)"/>
+                    <rect x="2.5" y="2.5" width="40" height="40" rx="11" fill="var(--xrou-elevated)" stroke="var(--xrou-border-strong)" stroke-width="2.5"/>
+                    <path d="M13 13.5L32 31.5M32 13.5L13 31.5" stroke="url(#xg)" stroke-width="6.5" stroke-linecap="round"/>
+                </svg>
+                <span>XROUMINARE</span>
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="xrou-admin-theme-toggle" id="xrouAdminThemeToggle" title="Ganti tema terang/gelap">
+                        <a href="#" onclick="return false;"><i class="fa fa-moon-o"></i></a>
+                    </li>
+                    <li class="user-menu">
+                        <a href="#">
+                            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?s=160" class="user-image" alt="User Image">
+                            <span class="hidden-xs">Everest Admin</span>
+                        </a>
+                    </li>
+                    <li><a href="#" title="Exit Admin Control"><i class="fa fa-server"></i></a></li>
+                    <li><a href="#" title="Logout"><i class="fa fa-sign-out"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">BASIC ADMINISTRATION</li>
+                <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Overview</span></a></li>
+                <li><a href="#"><i class="fa fa-wrench"></i> <span>Settings</span></a></li>
+                <li><a href="#"><i class="fa fa-gamepad"></i> <span>Application API</span></a></li>
+                <li class="header">MANAGEMENT</li>
+                <li><a href="#"><i class="fa fa-database"></i> <span>Databases</span></a></li>
+                <li><a href="#"><i class="fa fa-globe"></i> <span>Locations</span></a></li>
+                <li><a href="#"><i class="fa fa-sitemap"></i> <span>Nodes</span></a></li>
+                <li><a href="#"><i class="fa fa-server"></i> <span>Servers</span></a></li>
+                <li><a href="#"><i class="fa fa-users"></i> <span>Users</span></a></li>
+                <li class="header">SERVICE MANAGEMENT</li>
+                <li><a href="#"><i class="fa fa-magic"></i> <span>Mounts</span></a></li>
+                <li><a href="#"><i class="fa fa-th-large"></i> <span>Nests</span></a></li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>Administrative Overview<small>A quick glance at your system.</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#">Admin</a></li>
+                <li class="active">Index</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="alert alert-info" role="alert">
+                <i class="fa fa-info-circle"></i> Ini contoh notifikasi alert pada Admin Control.
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">System Information</h3>
+                        </div>
+                        <div class="box-body">
+                            You are running Pterodactyl Panel version <code>v1.11.11</code>. Your panel is up-to-date!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>128</h3>
+                            <p>Total Servers</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-server"></i></div>
+                        <a href="#" class="small-box-footer">Lihat semua <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>96</h3>
+                            <p>Servers Online</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-check"></i></div>
+                        <a href="#" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>14</h3>
+                            <p>Nodes</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-sitemap"></i></div>
+                        <a href="#" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <div class="small-box bg-maroon">
+                        <div class="inner">
+                            <h3>2</h3>
+                            <p>Suspended</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-ban"></i></div>
+                        <a href="#" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">User List</h3>
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width:220px">
+                                    <input type="text" class="form-control pull-right" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <button type="button" class="btn btn-sm btn-primary" style="border-radius:0 3px 3px 0;margin-left:-1px;">Create New</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th><th>Email</th><th>Client Name</th><th class="text-center">2FA</th><th class="text-center">Servers Owned</th><th>Status</th><th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>1</code></td><td>everest@example.com</td><td>Everest</td><td class="text-center"><i class="fa fa-lock text-muted"></i></td><td class="text-center">12</td>
+                                        <td><span class="label label-success">Active</span></td>
+                                        <td class="text-center"><a href="#" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>2</code></td><td>admin@example.com</td><td>Administrator</td><td class="text-center"><i class="fa fa-lock fa-fw" style="color:#4AA96E"></i></td><td class="text-center">3</td>
+                                        <td><span class="label label-success">Active</span></td>
+                                        <td class="text-center"><a href="#" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>3</code></td><td>suspended@example.com</td><td>Spammer</td><td class="text-center"><i class="fa fa-unlock text-muted"></i></td><td class="text-center">0</td>
+                                        <td><span class="label bg-maroon">Suspended</span></td>
+                                        <td class="text-center"><a href="#" class="btn btn-xs btn-default"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                <li class="disabled"><a href="#">«</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1" data-toggle="tab">Pengaturan</a></li>
+                            <li><a href="#tab2" data-toggle="tab">Lanjutan</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <div class="form-group">
+                                    <label class="control-label">Company Name</label>
+                                    <input type="text" class="form-control" value="XROUMINARE">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Default Language</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-language"></i></span>
+                                        <select class="form-control"><option>id</option><option>en</option></select>
+                                    </div>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" checked> Aktifkan registrasi 2FA</label>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0">
+                                    <button type="button" class="btn btn-primary">Simpan Perubahan</button>
+                                    <button type="button" class="btn btn-danger" style="float:right">Reset</button>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2"><p class="text-muted">Konten tab lanjutan…</p></div>
+                        </div>
+                    </div>
+
+                    <div class="callout callout-info">
+                        <h4>Info</h4>
+                        <p>Callout ringkasan sistem dengan border kiri warna aksen.</p>
+                    </div>
+
+                    <div class="box box-default">
+                        <div class="box-header with-border"><h3 class="box-title">Aksi Cepat</h3></div>
+                        <div class="box-body">
+                            <div class="row text-center">
+                                <div class="col-xs-6" style="margin-bottom:8px"><button class="btn btn-primary" style="width:100%">Dokumentasi</button></div>
+                                <div class="col-xs-6" style="margin-bottom:8px"><button class="btn btn-warning" style="width:100%">Get Help</button></div>
+                                <div class="col-xs-6"><button class="btn btn-success" style="width:100%">Support</button></div>
+                                <div class="col-xs-6"><button class="btn btn-default" style="width:100%">Github</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="main-footer">
+        <div class="pull-right small text-gray" style="margin-right:10px;margin-top:-7px;">
+            <strong><i class="fa fa-fw fa-code-fork"></i></strong> v1.11.11<br>
+            <strong><i class="fa fa-fw fa-clock-o"></i></strong> 0.042s
+        </div>
+        Copyright &copy; 2015 - 2026 <a href="#">Pterodactyl Software</a>.
+    </footer>
+</div>
+
+<script>
+    (function () {
+        function resolveIsDark() {
+            var mode = localStorage.getItem('xrou-theme') || 'dark';
+            return mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        }
+        function apply() {
+            var dark = resolveIsDark();
+            var root = document.documentElement;
+            root.classList.toggle('xrou-dark', dark);
+            root.classList.toggle('xrou-light', !dark);
+            var icon = document.querySelector('#xrouAdminThemeToggle i');
+            if (icon) icon.className = dark ? 'fa fa-moon-o' : 'fa fa-sun-o';
+        }
+        document.getElementById('xrouAdminThemeToggle').addEventListener('click', function () {
+            localStorage.setItem('xrou-theme', resolveIsDark() ? 'light' : 'dark');
+            apply();
+        });
+        apply();
+    })();
+</script>
+</body>
+</html>

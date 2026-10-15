@@ -11,6 +11,8 @@ BUNDLE="$ROOT/theme-bundle"
 FILES=(
     "tailwind.config.js"
     "resources/views/templates/wrapper.blade.php"
+    "resources/views/layouts/admin.blade.php"
+    "public/themes/pterodactyl/css/xrou-admin.css"
     "resources/scripts/assets/css/xrou-theme.css"
     "resources/scripts/assets/css/GlobalStylesheet.ts"
     "resources/scripts/components/App.tsx"
