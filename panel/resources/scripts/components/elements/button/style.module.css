@@ -1,0 +1,92 @@
+/* XROUMINARE buttons (CSS-module variant used by the console & dialogs).
+ | Same Saweria treatment: solid colors, strong border, hard offset shadow.
+ | Disabled states avoid Tailwind opacity modifiers on CSS-variable colors. */
+.button {
+    @apply px-4 py-2 inline-flex items-center justify-center;
+    @apply rounded-md text-sm transition-all duration-100;
+    font-weight: 800;
+    border: 2px solid var(--xrou-border-strong);
+    border-radius: 6px;
+    box-shadow: var(--xrou-shadow-offset) var(--xrou-shadow-offset) 0 var(--xrou-shadow);
+    transition:
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        background-color 140ms ease,
+        opacity 140ms ease;
+
+    &:hover:not(:disabled) {
+        transform: translate(-1px, -1px);
+        box-shadow: calc(var(--xrou-shadow-offset) + 1px) calc(var(--xrou-shadow-offset) + 1px) 0 var(--xrou-shadow);
+    }
+
+    &:active:not(:disabled) {
+        transform: translate(3px, 3px);
+        box-shadow: 2px 2px 0 var(--xrou-shadow);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--xrou-focus);
+        outline-offset: 3px;
+    }
+
+    /* Sizing Controls */
+    &.small {
+        @apply px-4 py-0 h-8 text-sm;
+        font-weight: 700;
+    }
+
+    &.large {
+        @apply px-5 py-3;
+    }
+
+    &.secondary {
+        background-color: transparent !important;
+        color: var(--xrou-text);
+    }
+
+    &:disabled {
+        @apply cursor-not-allowed;
+        opacity: 0.55;
+        transform: none;
+        box-shadow: 3px 3px 0 var(--xrou-shadow);
+    }
+
+    &.square {
+        @apply p-0 w-12 h-12;
+
+        &.small {
+            @apply w-8 h-8;
+        }
+    }
+}
+
+.primary {
+    background-color: var(--xrou-cyan);
+    color: var(--xrou-cyan-text);
+
+    &:hover:not(:disabled) {
+        background-color: var(--xrou-cyan-hover);
+    }
+}
+
+.text {
+    background-color: var(--xrou-chip);
+    color: var(--xrou-text);
+
+    &:hover:not(:disabled) {
+        background-color: var(--xrou-chip-soft);
+    }
+}
+
+.danger {
+    background-color: var(--xrou-pink);
+    color: var(--xrou-pink-text);
+
+    &:hover:not(:disabled) {
+        background-color: var(--xrou-pink-hover);
+    }
+}
