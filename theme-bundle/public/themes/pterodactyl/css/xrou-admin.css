@@ -766,6 +766,20 @@ html.xrou-light .skin-blue .btn.btn-default:hover {
     font-weight: 700;
 }
 
+.skin-blue .alert a {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 800;
+}
+
+.skin-blue .alert code {
+    background-color: rgba(0, 0, 0, 0.18);
+    color: inherit;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
 .skin-blue .alert-success { background-color: #d9f2e2; border-color: #4aa96e; color: #14532d; }
 .skin-blue .alert-danger,
 .skin-blue .alert-error   { background-color: #ffdde2; border-color: #e14f66; color: #8f1d2f; }
@@ -994,3 +1008,117 @@ html.xrou-light .skin-blue .btn.btn-default:hover {
 .xrou-admin-theme-toggle {
     cursor: pointer;
 }
+
+/* ------------------------------------------------------------------ */
+/* Admin Settings Specific Styles                                      */
+/* ------------------------------------------------------------------ */
+.skin-blue .nav-tabs-custom.nav-tabs-floating {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 20px;
+}
+
+.skin-blue .nav-tabs-custom.nav-tabs-floating > .nav-tabs {
+    background: transparent !important;
+    border: none !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+}
+
+.skin-blue .nav-tabs-custom.nav-tabs-floating > .nav-tabs > li {
+    margin: 0 !important;
+    border: none !important;
+    border-top: none !important;
+}
+
+.skin-blue .nav-tabs-custom.nav-tabs-floating > .nav-tabs > li > a {
+    background-color: var(--xrou-elevated) !important;
+    border: 2px solid var(--xrou-border-strong) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--xrou-shadow-offset) var(--xrou-shadow-offset) 0 var(--xrou-shadow) !important;
+    color: var(--xrou-text-2) !important;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 10px 22px !important;
+    margin: 0 !important;
+    transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.skin-blue .nav-tabs-custom.nav-tabs-floating > .nav-tabs > li > a:hover {
+    background-color: var(--xrou-chip) !important;
+    color: var(--xrou-text) !important;
+    transform: translate(-1px, -1px);
+    box-shadow: calc(var(--xrou-shadow-offset) + 1px) calc(var(--xrou-shadow-offset) + 1px) 0 var(--xrou-shadow) !important;
+}
+
+.skin-blue .nav-tabs-custom.nav-tabs-floating > .nav-tabs > li.active > a {
+    background-color: var(--xrou-cyan) !important;
+    color: var(--xrou-cyan-text) !important;
+    border-color: var(--xrou-border-strong) !important;
+    box-shadow: 2px 2px 0 var(--xrou-shadow) !important;
+    transform: translate(2px, 2px);
+}
+
+/* Radio Button Groups (e.g. 2FA settings in Admin Settings) */
+.skin-blue .btn-group[data-toggle="buttons"] {
+    display: inline-flex;
+    border: 2px solid var(--xrou-border-strong);
+    border-radius: 8px;
+    box-shadow: var(--xrou-shadow-offset) var(--xrou-shadow-offset) 0 var(--xrou-shadow);
+    background-color: var(--xrou-input);
+    padding: 3px;
+    gap: 4px;
+}
+
+.skin-blue .btn-group[data-toggle="buttons"] > .btn {
+    border: 1.5px solid transparent !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    transform: none !important;
+    background-color: var(--xrou-chip) !important;
+    color: var(--xrou-text-2) !important;
+    font-weight: 800;
+    font-size: 12px;
+    padding: 7px 16px;
+    transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.skin-blue .btn-group[data-toggle="buttons"] > .btn:hover {
+    background-color: var(--xrou-chip-soft) !important;
+    color: var(--xrou-text) !important;
+}
+
+.skin-blue .btn-group[data-toggle="buttons"] > .btn.active {
+    background-color: var(--xrou-cyan) !important;
+    color: var(--xrou-cyan-text) !important;
+    border-color: var(--xrou-border-strong) !important;
+    box-shadow: 2px 2px 0 var(--xrou-shadow) !important;
+}
+
+.skin-blue .btn-group[data-toggle="buttons"] > .btn input[type="radio"],
+.skin-blue .btn-group[data-toggle="buttons"] > .btn input[type="checkbox"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+/* Settings form horizontal dividers */
+.skin-blue hr {
+    border: 0;
+    border-top: 2px solid var(--xrou-border);
+    margin: 20px 0;
+}
+
+/* Settings field optional label */
+.skin-blue .field-optional::before {
+    content: "(optional)";
+    font-size: 10px;
+    text-transform: lowercase;
+    color: var(--xrou-text-3);
+    font-weight: 600;
+    margin-left: 4px;
+}
+

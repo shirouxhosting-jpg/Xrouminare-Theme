@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id" class="xrou-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XROUMINARE — Preview Admin Settings</title>
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/select2/select2.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/adminlte/admin.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/adminlte/colors/skin-blue.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/vendor/sweetalert/sweetalert.min.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/css/pterodactyl.css">
+<link rel="stylesheet" href="../panel/public/themes/pterodactyl/css/xrou-admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .preview-switcher {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        z-index: 9999;
+        display: flex;
+        gap: 8px;
+    }
+</style>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span style="display:inline-flex;align-items:center;gap:8px;">
+                <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="xg" x1="14" y1="14" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#62C4D4"/><stop offset="1" stop-color="#8175F5"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="5.5" y="5.5" width="40" height="40" rx="11" fill="var(--xrou-shadow)"/>
+                    <rect x="2.5" y="2.5" width="40" height="40" rx="11" fill="var(--xrou-elevated)" stroke="var(--xrou-border-strong)" stroke-width="2.5"/>
+                    <path d="M13 13.5L32 31.5M32 13.5L13 31.5" stroke="url(#xg)" stroke-width="6.5" stroke-linecap="round"/>
+                </svg>
+                <span>XROUMINARE</span>
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="xrou-admin-theme-toggle" id="xrouAdminThemeToggle" title="Ganti tema terang/gelap">
+                        <a href="#" onclick="return false;"><i class="fa fa-moon-o"></i></a>
+                    </li>
+                    <li class="user-menu">
+                        <a href="#">
+                            <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?s=160" class="user-image" alt="User Image">
+                            <span class="hidden-xs">Everest Admin</span>
+                        </a>
+                    </li>
+                    <li><a href="index.html" title="Lihat Dashboard Client"><i class="fa fa-server"></i></a></li>
+                    <li><a href="#" title="Logout"><i class="fa fa-sign-out"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">BASIC ADMINISTRATION</li>
+                <li><a href="admin.html"><i class="fa fa-home"></i> <span>Overview</span></a></li>
+                <li class="active"><a href="admin-settings.html"><i class="fa fa-wrench"></i> <span>Settings</span></a></li>
+                <li><a href="#"><i class="fa fa-gamepad"></i> <span>Application API</span></a></li>
+                <li class="header">MANAGEMENT</li>
+                <li><a href="#"><i class="fa fa-database"></i> <span>Databases</span></a></li>
+                <li><a href="#"><i class="fa fa-globe"></i> <span>Locations</span></a></li>
+                <li><a href="#"><i class="fa fa-sitemap"></i> <span>Nodes</span></a></li>
+                <li><a href="#"><i class="fa fa-server"></i> <span>Servers</span></a></li>
+                <li><a href="#"><i class="fa fa-users"></i> <span>Users</span></a></li>
+                <li class="header">SERVICE MANAGEMENT</li>
+                <li><a href="#"><i class="fa fa-magic"></i> <span>Mounts</span></a></li>
+                <li><a href="#"><i class="fa fa-th-large"></i> <span>Nests</span></a></li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>Panel Settings<small>Configure Pterodactyl to your liking.</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="admin.html">Admin</a></li>
+                <li class="active">Settings</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <!-- Notice bar -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-info">
+                        <i class="fa fa-info-circle"></i> Mode preview Admin Settings: Tampilan telah disesuaikan penuh dengan tema <strong>XROUMINARE (Saweria Style)</strong> dan mendukung <strong>Pterodactyl v1.15</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Settings Tabs -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="nav-tabs-custom nav-tabs-floating">
+                        <ul class="nav nav-tabs">
+                            <li class="active" id="tabNavGeneral"><a href="#" onclick="switchTab('general'); return false;">General</a></li>
+                            <li id="tabNavMail"><a href="#" onclick="switchTab('mail'); return false;">Mail</a></li>
+                            <li id="tabNavAdvanced"><a href="#" onclick="switchTab('advanced'); return false;">Advanced</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: General Settings -->
+            <div id="tabContentGeneral">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Panel Settings</h3>
+                            </div>
+                            <form onsubmit="return false;">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label">Company Name</label>
+                                            <div>
+                                                <input type="text" class="form-control" name="app:name" value="XROUMINARE Cloud">
+                                                <p class="text-muted"><small>This is the name that is used throughout the panel and in emails sent to clients.</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label">Require 2-Factor Authentication</label>
+                                            <div>
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-primary active" id="btn2fa0" onclick="select2fa(0)">
+                                                        <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="0" checked> Not Required
+                                                    </label>
+                                                    <label class="btn btn-primary" id="btn2fa1" onclick="select2fa(1)">
+                                                        <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="1"> Admin Only
+                                                    </label>
+                                                    <label class="btn btn-primary" id="btn2fa2" onclick="select2fa(2)">
+                                                        <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="2"> All Users
+                                                    </label>
+                                                </div>
+                                                <p class="text-muted"><small>If enabled, any account falling into the selected grouping will be required to have 2-Factor authentication enabled.</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label">Default Language</label>
+                                            <div>
+                                                <select name="app:locale" class="form-control">
+                                                    <option value="en" selected>English</option>
+                                                    <option value="id">Bahasa Indonesia</option>
+                                                    <option value="de">Deutsch</option>
+                                                    <option value="es">Español</option>
+                                                    <option value="fr">Français</option>
+                                                    <option value="ja">日本語</option>
+                                                </select>
+                                                <p class="text-muted"><small>The default language to use when rendering UI components.</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Mail Settings -->
+            <div id="tabContentMail" style="display:none;">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Email Settings</h3>
+                            </div>
+                            <form onsubmit="return false;">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">SMTP Host</label>
+                                            <div>
+                                                <input required type="text" class="form-control" name="mail:host" value="smtp.mailgun.org">
+                                                <p class="text-muted small">Enter the SMTP server address that mail should be sent through.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label class="control-label">SMTP Port</label>
+                                            <div>
+                                                <input required type="number" class="form-control" name="mail:port" value="587">
+                                                <p class="text-muted small">Enter the SMTP server port.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label">Encryption</label>
+                                            <div>
+                                                <select name="mail:encryption" class="form-control">
+                                                    <option value="">None</option>
+                                                    <option value="tls" selected>Transport Layer Security (TLS)</option>
+                                                    <option value="ssl">Secure Sockets Layer (SSL)</option>
+                                                </select>
+                                                <p class="text-muted small">Select the type of encryption to use.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Username <span class="field-optional"></span></label>
+                                            <div>
+                                                <input type="text" class="form-control" name="mail:username" value="postmaster@xrouminer.internal">
+                                                <p class="text-muted small">The username to use when connecting to SMTP.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Password <span class="field-optional"></span></label>
+                                            <div>
+                                                <input type="password" class="form-control" name="mail:password" value="secret_smtp_password">
+                                                <p class="text-muted small">The password for SMTP. Enter <code>!e</code> to empty.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Mail From</label>
+                                            <div>
+                                                <input required type="email" class="form-control" name="mail:from" value="no-reply@xrouminer.internal">
+                                                <p class="text-muted small">Enter an email address that all outgoing emails will originate from.</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Mail From Name <span class="field-optional"></span></label>
+                                            <div>
+                                                <input type="text" class="form-control" name="mail:name" value="XROUMINARE Support">
+                                                <p class="text-muted small">The name that emails should appear to come from.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-sm btn-success" style="margin-right:8px;">Test</button>
+                                        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Advanced Settings -->
+            <div id="tabContentAdvanced" style="display:none;">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">reCAPTCHA</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Status</label>
+                                        <div>
+                                            <select class="form-control" name="recaptcha:enabled">
+                                                <option value="true" selected>Enabled</option>
+                                                <option value="false">Disabled</option>
+                                            </select>
+                                            <p class="text-muted small">Silent captcha check for login and password reset.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Site Key</label>
+                                        <div>
+                                            <input type="text" class="form-control" value="6Lf_example_site_key_xrouminare">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Secret Key</label>
+                                        <div>
+                                            <input type="text" class="form-control" value="6Lf_example_secret_key_xrouminare">
+                                            <p class="text-muted small">Used for server-to-server validation.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">HTTP Connections</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Connection Timeout</label>
+                                        <div>
+                                            <input type="number" class="form-control" value="5">
+                                            <p class="text-muted small">Seconds to wait before timing out connection to Wings daemon.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Request Timeout</label>
+                                        <div>
+                                            <input type="number" class="form-control" value="15">
+                                            <p class="text-muted small">Seconds to wait for a request to complete.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box box-primary">
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-sm btn-primary pull-right">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="main-footer">
+        <div class="pull-right small text-gray" style="margin-right:10px;margin-top:-7px;">
+            <strong><i class="fa fa-fw fa-code-fork"></i></strong> v1.15.1<br>
+            <strong><i class="fa fa-fw fa-clock-o"></i></strong> 0.038s
+        </div>
+        Copyright &copy; 2015 - 2026 <a href="#">Pterodactyl Software</a>. Themed with <strong>XROUMINARE</strong>.
+    </footer>
+</div>
+
+<div class="preview-switcher">
+    <a href="admin.html" class="btn btn-sm btn-default"><i class="fa fa-dashboard"></i> Overview</a>
+    <a href="admin-settings.html" class="btn btn-sm btn-primary"><i class="fa fa-wrench"></i> Settings</a>
+    <a href="index.html" class="btn btn-sm btn-success"><i class="fa fa-desktop"></i> Client App</a>
+</div>
+
+<script>
+    function switchTab(tab) {
+        document.getElementById('tabContentGeneral').style.display = tab === 'general' ? 'block' : 'none';
+        document.getElementById('tabContentMail').style.display = tab === 'mail' ? 'block' : 'none';
+        document.getElementById('tabContentAdvanced').style.display = tab === 'advanced' ? 'block' : 'none';
+
+        document.getElementById('tabNavGeneral').classList.toggle('active', tab === 'general');
+        document.getElementById('tabNavMail').classList.toggle('active', tab === 'mail');
+        document.getElementById('tabNavAdvanced').classList.toggle('active', tab === 'advanced');
+    }
+
+    function select2fa(idx) {
+        [0, 1, 2].forEach(function(i) {
+            var btn = document.getElementById('btn2fa' + i);
+            if (btn) btn.classList.toggle('active', i === idx);
+        });
+    }
+
+    (function () {
+        var urlTheme = new URLSearchParams(location.search).get('theme');
+        if (urlTheme === 'light' || urlTheme === 'dark') {
+            try { localStorage.setItem('xrou-theme', urlTheme); } catch (e) {}
+        }
+        function resolveIsDark() {
+            var mode = localStorage.getItem('xrou-theme') || 'dark';
+            return mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        }
+        function apply() {
+            var dark = resolveIsDark();
+            var root = document.documentElement;
+            root.classList.toggle('xrou-dark', dark);
+            root.classList.toggle('xrou-light', !dark);
+            var icon = document.querySelector('#xrouAdminThemeToggle i');
+            if (icon) icon.className = dark ? 'fa fa-moon-o' : 'fa fa-sun-o';
+        }
+        document.getElementById('xrouAdminThemeToggle').addEventListener('click', function () {
+            localStorage.setItem('xrou-theme', resolveIsDark() ? 'light' : 'dark');
+            apply();
+        });
+        apply();
+    })();
+</script>
+</body>
+</html>

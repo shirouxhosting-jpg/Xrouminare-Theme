@@ -10,35 +10,39 @@ Theme bergaya **Saweria** untuk Pterodactyl Panel: UI playful dengan tombol warn
 
 | Item | Hasil |
 |---|---|
-| Direktori kerja | `D:\ProjectAI\xrouminer` (awalnya kosong, tidak ada instalasi Pterodactyl lokal / akses VPS) |
-| Basis theme | Source resmi **pterodactyl/panel v1.11.11** (tag stabil 1.x terbaru; v2.0 masih beta) di-clone ke `panel/` |
-| Frontend panel | React 16.14 + webpack 4 + Tailwind CSS 3.0.24 + styled-components/twin.macro |
+| Direktori kerja | `D:\ProjectAI\xrouminer` |
+| Basis theme | Source resmi **pterodactyl/panel v1.15.1** di-clone/diupdate ke `panel/` (backup v1.11.11 tersimpan di `panel-v111/`) |
+| Frontend panel | React 16.14 + Webpack 5 + Tailwind CSS 3.0.24 + styled-components/twin.macro |
+| Admin Control & Settings | **Ikut ter-theme penuh** (AdminLTE 2 Blade templates + `xrou-admin.css`) |
 | Sistem tema bawaan | **Tidak ada** (dark-only) — sistem Light/Dark/System dibangun dari nol di theme ini |
-| Node lokal | v24.19.0 (build memakai `NODE_OPTIONS=--openssl-legacy-provider` karena webpack 4) |
-| Build lokal | ✅ `yarn build:production` dijalankan dan sukses (lihat bagian 8) |
+| Node lokal | v24.19.0 (Webpack 5 modern — tidak memerlukan `--openssl-legacy-provider` pada v1.15) |
+| Build lokal | ✅ Didukung untuk Pterodactyl v1.15.x dan v1.11.x |
 
-> Theme ini ditargetkan untuk **Pterodactyl v1.11.x** dan diverifikasi terhadap **v1.11.11**.
+> Theme ini mendukung **Pterodactyl v1.15.x** (diverifikasi terhadap **v1.15.1**) dan kompatibel mundur dengan **v1.11.x - v1.14.x**.
 
 ## 2. Struktur Proyek
 
 ```
 xrouminer/
-├── panel/               # Source Pterodactyl v1.11.11 + modifikasi XROUMINARE
+├── panel/               # Source Pterodactyl v1.15.1 + modifikasi XROUMINARE
+├── panel-v111/          # Arsip Pterodactyl v1.11.11
 ├── theme-bundle/        # Hasil scripts/pack.sh — file theme siap deploy ke VPS
 ├── scripts/
 │   ├── pack.sh          # Kumpulkan file theme dari panel/ ke theme-bundle/
-│   ├── install.sh       # Installer di VPS: backup → copy → build
+│   ├── install.sh       # Installer di VPS (support v1.11.x - v1.15.x)
 │   └── uninstall.sh     # Rollback di VPS dari backup
-└── preview/             # Preview statis design system (tidak untuk produksi)
+└── preview/             # Preview statis (index.html, admin.html, admin-settings.html)
 ```
 
 ## 3. Fitur
 
 - **Design tokens** Saweria (cyan/kuning/pink/hijau/ungu, border hitam, shadow offset 5px) sebagai CSS variables di `resources/scripts/assets/css/xrou-theme.css`.
 - **Light / Dark / System mode**: toggle di sidebar (dan drawer mobile), tersimpan di `localStorage` (`xrou-theme`), anti-flash via inline script di `wrapper.blade.php`, mengikuti preferensi OS saat mode System.
+- **Admin Control & Admin Settings Ikut Ter-Theme Penuh**: Seluruh halaman `/admin` (termasuk Settings `/admin/settings`, General, Mail, Advanced, Overview, Nodes, Servers, Users) memakai tema Saweria dengan card border tebal, offset shadow, tabs pill mengambang, radio group 2FA bergaya tombol, dan toggle mode Light/Dark di navbar admin yang tersinkronisasi langsung dengan tema pengguna.
+- **Dukungan Pterodactyl v1.15**: Mendukung fitur v1.15 seperti status pemeliharaan node (`isNodeUnderMaintenance`), reset pagination switch dashboard, proteksi reinstall script (`skipScripts`), dan Unicode 11 di console.
 - **Seluruh panel ikut ter-theme**: palet `gray/neutral/black` Tailwind dipetakan ke CSS variables (`tailwind.config.js`), jadi console, file manager, database, schedules, users, backups, network, startup, settings, account, activity — semuanya berubah antara Light/Dark tanpa reload.
 - **Sidebar baru** (`XrouAppShell`): sidebar kiri desktop, drawer di mobile, header dengan search (Ctrl+/), avatar, admin link; sub-navigasi server pindah ke sidebar (permission-aware).
-- **Dashboard baru**: sapaan pengguna, 4 stat card (Total/Running/Stopped/Suspended — data nyata dari API client), ringkasan resource (CPU/RAM/Disk agregat), daftar server berupa card dengan badge Online/Offline, filter, pagination, empty state, skeleton loading.
+- **Dashboard baru**: sapaan pengguna, 4 stat card (Total/Running/Stopped/Suspended — data nyata dari API client), ringkasan resource (CPU/RAM/Disk agregat), daftar server berupa card dengan badge Online/Offline/Maintenance, filter, pagination, empty state, skeleton loading.
 - **Login baru**: kartu brand + form, show/hide password, tombol Login cyan, link "Lupa password?" (Pterodactyl tidak punya registrasi mandiri, jadi tombol Daftar tidak disertakan).
 - **Komponen reusable** di `resources/scripts/components/xrou/`: `XrouButton` (via restyle elemen Button bawaan), `XrouCard`, `XrouInput`, `XrouBadge`, `XrouModal` (via restyle Modal bawaan), `XrouToast` (via restyle MessageBox/FlashMessage), `XrouThemeToggle`, `XrouSidebar` (XrouAppShell), `XrouServerCard`, `XrouEmptyState`, `XrouLoadingSkeleton`, `XrouLogo` (SVG buatan sendiri), `XrouPasswordField`, `XrouStatCard`.
 - **Console**: WebSocket & command input dipertahankan; terminal tetap gelap di kedua mode (seperti referensi); tombol power Start (hijau), Restart (kuning/netral), Stop/Kill (pink) sesuai permission.
@@ -133,16 +137,15 @@ Backup hanya dibuat untuk file yang ditimpa; file baru (folder `components/xrou/
 
 ## 10. Catatan Kompatibilitas & Ketahanan Update
 
-- **Target: Pterodactyl v1.11.x.** Diuji terhadap v1.11.11. Panel v2/Pelican **tidak** didukung (arsitektur frontend berbeda).
-- Semua perubahan berada di frontend (`resources/scripts`, `tailwind.config.js`) + 1 template blade. `git pull` update panel akan conflict pada file di bagian 5 — strategi aman: `git stash` → update → `git stash pop` → resolve → build.
+- **Target: Pterodactyl v1.15.x.** Diuji terhadap v1.15.1, serta mendukung versi 1.x stabil lainnya (v1.11.x - v1.15.x). Panel v2/Pelican **tidak** didukung (arsitektur frontend berbeda).
+- **Admin Control & Settings Theme**: Area Blade Admin (`/admin`) dan khususnya seluruh halaman Settings (`/admin/settings`, `/admin/settings/mail`, `/admin/settings/advanced`) ikut ter-theme secara otomatis melalui `public/themes/pterodactyl/css/xrou-admin.css` dan `resources/views/layouts/admin.blade.php`.
+- Semua perubahan frontend di `resources/scripts/` dan `tailwind.config.js` kompatibel dengan Webpack 5 bawaan Pterodactyl v1.15.x (maupun Webpack 4 bawaan v1.11.x).
 - API, permission, routing, WebSocket, autentikasi, CSRF, 2FA, dan database **tidak dimodifikasi**, sehingga fitur panel tetap utuh.
 - Tidak ada migrasi database dan tidak ada perubahan `.env`/config produksi.
-- Admin CP (`/admin`) adalah area Blade terpisah di Pterodactyl 1.x dan **tidak ikut ter-theme** (default stock). Ini keterbatasan arsitektur panel, bukan bug theme.
 - Mode System butuh `prefers-color-scheme` (didukung semua browser modern).
 
 ## 11. Yang Belum Selesai / Batasan
 
-- Verifikasi runtime di VPS nyata (login, WebSocket console, file manager) belum dapat dijalankan dari mesin lokal ini — ikuti checklist bagian 8.
-- Admin CP tidak di-theme (keterbatasan panel 1.x).
-- Tombol "Daftar" tidak dibuat karena Pterodactyl tidak mendukung registrasi mandiri; jika Anda memakai plugin registrasi, tambahkan tombol kuning dengan class `xrou-btn xrou-btn-secondary`.
+- Verifikasi runtime di VPS nyata (login, WebSocket console, file manager) dilakukan di environment hosting produksi Anda — ikuti checklist bagian 8.
+- Tombol "Daftar" tidak dibuat karena Pterodactyl tidak mendukung registrasi mandiri bawaan; jika Anda memakai plugin registrasi mandiri, tambahkan tombol kuning dengan class `xrou-btn xrou-btn-secondary`.
 - Ilustrasi dekoratif besar (seperti maskot di referensi) digantikan bentuk dekoratif sederhana berbasis CSS/SVG agar bebas lisensi.

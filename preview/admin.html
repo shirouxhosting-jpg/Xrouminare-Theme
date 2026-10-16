@@ -64,8 +64,8 @@
         <section class="sidebar">
             <ul class="sidebar-menu">
                 <li class="header">BASIC ADMINISTRATION</li>
-                <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Overview</span></a></li>
-                <li><a href="#"><i class="fa fa-wrench"></i> <span>Settings</span></a></li>
+                <li class="active"><a href="admin.html"><i class="fa fa-home"></i> <span>Overview</span></a></li>
+                <li><a href="admin-settings.html"><i class="fa fa-wrench"></i> <span>Settings</span></a></li>
                 <li><a href="#"><i class="fa fa-gamepad"></i> <span>Application API</span></a></li>
                 <li class="header">MANAGEMENT</li>
                 <li><a href="#"><i class="fa fa-database"></i> <span>Databases</span></a></li>
@@ -257,15 +257,25 @@
 
     <footer class="main-footer">
         <div class="pull-right small text-gray" style="margin-right:10px;margin-top:-7px;">
-            <strong><i class="fa fa-fw fa-code-fork"></i></strong> v1.11.11<br>
+            <strong><i class="fa fa-fw fa-code-fork"></i></strong> v1.15.1<br>
             <strong><i class="fa fa-fw fa-clock-o"></i></strong> 0.042s
         </div>
-        Copyright &copy; 2015 - 2026 <a href="#">Pterodactyl Software</a>.
+        Copyright &copy; 2015 - 2026 <a href="#">Pterodactyl Software</a>. Themed with <strong>XROUMINARE</strong>.
     </footer>
+</div>
+
+<div class="preview-switcher" style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;gap:8px;">
+    <a href="admin.html" class="btn btn-sm btn-primary"><i class="fa fa-dashboard"></i> Overview</a>
+    <a href="admin-settings.html" class="btn btn-sm btn-default"><i class="fa fa-wrench"></i> Settings</a>
+    <a href="index.html" class="btn btn-sm btn-success"><i class="fa fa-desktop"></i> Client App</a>
 </div>
 
 <script>
     (function () {
+        var urlTheme = new URLSearchParams(location.search).get('theme');
+        if (urlTheme === 'light' || urlTheme === 'dark') {
+            try { localStorage.setItem('xrou-theme', urlTheme); } catch (e) {}
+        }
         function resolveIsDark() {
             var mode = localStorage.getItem('xrou-theme') || 'dark';
             return mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);

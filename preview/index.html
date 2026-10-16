@@ -203,6 +203,11 @@
     </div>
 </div>
 
+<div class="preview-switcher" style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;gap:8px;">
+    <a href="admin.html" class="xrou-btn xrou-btn-neutral xrou-btn-sm" style="text-decoration:none">Admin Overview</a>
+    <a href="admin-settings.html" class="xrou-btn xrou-btn-primary xrou-btn-sm" style="text-decoration:none">Admin Settings</a>
+</div>
+
 <script>
     const root = document.documentElement;
     const btn = document.getElementById('themeToggle');
@@ -212,9 +217,15 @@
         btn.textContent = root.classList.contains('xrou-light')
             ? 'Ganti Mode (Light ⇄ Dark)' : 'Ganti Mode (Dark ⇄ Light)';
     });
-    // start in light
-    root.classList.add('xrou-light');
-    root.classList.remove('xrou-dark');
+    // Optional ?theme=light|dark override (used for automated screenshots)
+    const urlTheme = new URLSearchParams(location.search).get('theme');
+    if (urlTheme === 'dark') {
+        root.classList.add('xrou-dark');
+        root.classList.remove('xrou-light');
+    } else {
+        root.classList.add('xrou-light');
+        root.classList.remove('xrou-dark');
+    }
 </script>
 </body>
 </html>

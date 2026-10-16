@@ -18,6 +18,7 @@ interface ServerCardProps {
 
 const statusLabel = (server: Server, stats: ServerStats | null): { label: string; variant: 'success' | 'danger' | 'warning' | 'info' | 'neutral' } => {
     if (server.status === 'suspended') return { label: 'Suspended', variant: 'danger' };
+    if (server.isNodeUnderMaintenance) return { label: 'Maintenance', variant: 'warning' };
     if (server.isTransferring) return { label: 'Transferring', variant: 'neutral' };
     if (server.status === 'installing' || server.status === 'restoring_backup') {
         return { label: server.status === 'installing' ? 'Installing' : 'Restoring', variant: 'info' };
@@ -59,7 +60,7 @@ const XrouServerCard = ({ server, pollInterval = 30000 }: ServerCardProps) => {
     const suspended = server.status === 'suspended';
 
     useEffect(() => {
-        if (suspended) return;
+        if (suspended || server.isNodeUnderMaintenance) return;
 
         let interval: Timer | undefined;
         const fetchStats = () =>
@@ -75,7 +76,7 @@ const XrouServerCard = ({ server, pollInterval = 30000 }: ServerCardProps) => {
         });
 
         return () => interval && clearInterval(interval);
-    }, [server.uuid, suspended, pollInterval]);
+    }, [server.uuid, suspended, server.isNodeUnderMaintenance, pollInterval]);
 
     const { label, variant } = statusLabel(server, stats);
     const address = server.allocations

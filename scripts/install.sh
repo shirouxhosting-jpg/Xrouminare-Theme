@@ -31,10 +31,12 @@ if command -v php >/dev/null 2>&1; then
         VERSION="$(grep -oP "'version' => '\K[^']+" "$PANEL_DIR/config/app.php" | head -1 || echo unknown)"
     fi
     echo "Detected panel version: $VERSION"
-    if [ "$VERSION" = "canary" ] || [ -z "$VERSION" ]; then
-        echo "NOTE: version reads as 'canary' — verify manually that the panel is v1.11.x."
-    elif [[ "$VERSION" != 1.11* ]]; then
-        echo "WARNING: this theme targets v1.11.x. Continuing anyway — verify visually after build."
+    if [[ "$VERSION" =~ ^1\.(1[1-5]) ]]; then
+        echo "Supported Pterodactyl version: $VERSION (v1.11.x - v1.15.x)"
+    elif [ "$VERSION" = "canary" ] || [ -z "$VERSION" ]; then
+        echo "NOTE: version reads as 'canary' — proceeding with installation (supports v1.11.x - v1.15.x)."
+    else
+        echo "WARNING: this theme targets v1.11.x through v1.15.x. Continuing anyway — verify visually after build."
     fi
 else
     echo "WARNING: php CLI not found; skipping version detection."
@@ -68,7 +70,10 @@ echo "Installing JS dependencies (this can take a few minutes)..."
 yarn install --ignore-engines --network-timeout 600000
 
 NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]')"
-if [ "$NODE_MAJOR" -ge 17 ]; then
+WEBPACK_VER="$(node -p 'try { require("./node_modules/webpack/package.json").version } catch(e) { try { require("./package.json").devDependencies.webpack } catch(e2) { "" } }' 2>/dev/null || echo "")"
+
+# Webpack 4 on Node >= 17 requires --openssl-legacy-provider; Webpack 5 (v1.12+) does not.
+if [ "$NODE_MAJOR" -ge 17 ] && [[ "$WEBPACK_VER" =~ ^(\^|~)?4\. ]]; then
     export NODE_OPTIONS="--openssl-legacy-provider${NODE_OPTIONS:+ $NODE_OPTIONS}"
 fi
 echo "Building production assets..."
